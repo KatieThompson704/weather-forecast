@@ -1,5 +1,5 @@
 // replace this key with personal weather API Key
-var apiKey = "45ebbd33aab5c77a18994061b0a6ee6a";
+var apiKey = "d11e35bdec95037b6ad5269d9f22a4ae";
 // URL address of this endpoint;
 function getGeoLocation(city) {
   var geoURL =
