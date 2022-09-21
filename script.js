@@ -4,7 +4,7 @@ var apiKey = "d11e35bdec95037b6ad5269d9f22a4ae";
 function getGeoLocation(city) {
   //   reminder: promise = .then
   var geoURL =
-    "http://api.openweathermap.org/geo/1.0/direct?q=" +
+    "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
     "&limit=1&appid=" +
     apiKey;
