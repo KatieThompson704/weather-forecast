@@ -15,6 +15,7 @@
 }
 
 #five-day-weather {
+  flex-wrap: nowrap;
 }
 
 .fake {
