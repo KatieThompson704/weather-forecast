@@ -23,4 +23,6 @@ Mock-Up
 
 Access the application at the folloiwng web URL: https://katiethompson704.github.io/weather-forecast/
 
-See Below for screenshots of the deployed application:
+See below for screenshot of the deployed application:
+
+<img src="assets\screenshot1.png">

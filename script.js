@@ -2,7 +2,6 @@
 var apiKey = "d11e35bdec95037b6ad5269d9f22a4ae";
 // URL address of this endpoint;
 function getGeoLocation(city) {
-  //   reminder: promise = .then
   var geoURL =
     "https://api.openweathermap.org/geo/1.0/direct?q=" +
     city +
@@ -21,6 +20,8 @@ function getGeoLocation(city) {
       getWeather(lat, lon, name);
     });
 }
+
+// fetch call to weather api, passing  lat, lon, and apikey in URL to get weather data from API
 function getWeather(lat, lon, name) {
   var weatherURL = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${apiKey}&units=imperial`;
   fetch(weatherURL)
@@ -31,6 +32,8 @@ function getWeather(lat, lon, name) {
       displayWeather(weatherData);
     });
 }
+
+// identify weather data elements and display to page
 function displayWeather(weatherData) {
   console.log(weatherData);
   $("#weather-main").empty();
@@ -77,7 +80,6 @@ function getFiveDayForecast(lat, lon) {
       );
       console.log(targetArray);
       for (var i = 0; i < targetArray.length; i++) {
-        // console.log(data.list[i].dt_txt.split(" ")[1]);
         var forecastTemp = targetArray[i].main.temp;
         console.log(forecastTemp);
         var forecastHumidity = targetArray[i].main.humidity;
@@ -117,6 +119,7 @@ function getFiveDayForecast(lat, lon) {
     });
 }
 
+// store searched cities in local storage then display searched cities to page
 function storeCitySearch(cityName) {
   var citySearch = {
     city: cityName,
@@ -130,28 +133,50 @@ function storeCitySearch(cityName) {
     });
     arrayOfCities.push(citySearch);
     localStorage.setItem(`citySearch`, JSON.stringify(arrayOfCities));
-    var searchedCityEl = $("<div>").addClass("card").text(citySearch.city);
+    var searchedCityEl = $("<button>")
+      .addClass("btn btn-success")
+      .attr({ type: "button" })
+      .text(citySearch.city)
+      .on("click", function () {
+        console.log("I clicked this: " + $(this).text());
+        var cityName = $(this).text();
+        getGeoLocation(cityName);
+        storeCitySearch(cityName);
+      });
     $("#searched-cities").append(searchedCityEl);
   } else {
     arrayOfCities.push(citySearch);
     localStorage.setItem(`citySearch`, JSON.stringify(arrayOfCities));
-    var searchedCityEl = $("<div>").addClass("card").text(citySearch.city);
+    var searchedCityEl = $("<button>")
+      .addClass("btn btn-success")
+      .attr({ type: "button" })
+      .text(citySearch.city)
+      .on("click", function () {
+        console.log("I clicked this: " + $(this).text());
+        var cityName = $(this).text();
+        getGeoLocation(cityName);
+        storeCitySearch(cityName);
+      });
     $("#searched-cities").append(searchedCityEl);
   }
-
-  // for (var i = 0; i < arrayOfCities.length; i++) {
-  //   var searchedCityEl = $("<div>")
-  //     .addClass("card")
-  //     .text(arrayOfCities[i].city);
-  //   $("#searched-cities").append(searchedCityEl);
-  // }
 }
+
+// Get Searched Cities from local Storage on page load; add functionality to searched cities, where city searches on click
 
 function getSearchedCities() {
   var cityList = JSON.parse(localStorage.getItem(`citySearch`));
   if (cityList) {
     for (var i = 0; i < cityList.length; i++) {
-      var searchedCityEl = $("<div>").addClass("card").text(cityList[i].city);
+      var searchedCityEl = $("<button>")
+        .addClass("btn btn-success")
+        .attr({ type: "button" })
+        .text(cityList[i].city)
+        .on("click", function () {
+          console.log("I clicked this: " + $(this).text());
+          var cityName = $(this).text();
+          getGeoLocation(cityName);
+          storeCitySearch(cityName);
+        });
       $("#searched-cities").append(searchedCityEl);
     }
   }
